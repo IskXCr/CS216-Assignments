@@ -1,0 +1,1 @@
+The fastest implementation is written in `b4.cpp`.
