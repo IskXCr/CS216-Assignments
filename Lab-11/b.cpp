@@ -10,13 +10,42 @@
 // #include <stack>
 // #pragma GCC optimize("O3")
 using namespace std;
-using namespace std::chrono;
+using namespace chrono;
+using ll = long long;
+
+constexpr ll mod = 1'000'000'000 + 7;
+
+ll function0(int base, ll exp)
+{
+    ll ans = 1, tmp = base;
+    ll exp0 = exp;
+    while (exp0)
+    {
+        if (exp0 & 1) ans = (ans * tmp) % mod;
+        tmp = (tmp * tmp) % mod;
+        exp0 >>= 1;
+    }
+    return ans;
+}
+
+ll function1(ll divisor, ll dividend)
+{
+    ll inv = function0(dividend, mod - 2);
+    // cout << inv << endl;
+    ll ans = divisor;
+    ans = (ans * inv) % mod;
+    return ans;
+}
 
 void solve()
 {
     // cin.tie(nullptr);
     // cin.sync_with_stdio(false);
-    
+    int n, m;
+    cin >> n >> m;
+    int ans = function0(2 * (n + 1), m);
+    ans = function1(((ll)ans * (n + 1 - m)) % mod, n + 1);
+    cout << ans << endl;
 }
 
 decltype(high_resolution_clock::now()) t1;
